@@ -2,9 +2,28 @@
 
 > A Remix Auth strategy for authenticating with Facebook.
 
-If you want to create a new strategy for Remix Auth, you could use this as a template for your repository.
+## Development
 
-The repo installs the latest version of Remix Auth and do the setup for you to have tests, linting and typechecking.
+Once you clone the repository, you can install the dependencies and then start the watcher:
+
+```bash
+yarn install
+yarn watch
+```
+
+Then you can create a _symlink_ using [npm link](https://docs.npmjs.com/cli/v8/commands/npm-link). In the same directory (current repository) run:
+
+```bash
+npm link
+```
+
+Finally, if you would like to test this strategy locally in a remix project, cd into that directory and run:
+
+```bash
+npm link remix-auth-facebook
+```
+
+Ps. Note that you although the watcher will compile TS on every change, temporarily you will have to manually restart your remix project's watcher (ie. `npm run dev`).
 
 ## How to use it
 
@@ -17,6 +36,7 @@ The repo installs the latest version of Remix Auth and do the setup for you to h
 ## Scripts
 
 - `build`: Build the project for production using the TypeScript compiler (strips the types).
+- `watch`: Similar to build, but watches for changes and rebuilds on the fly.
 - `typecheck`: Check the project for type errors, this also happens in build but it's useful to do in development.
 - `lint`: Runs ESLint againt the source codebase to ensure it pass the linting rules.
 - `test`: Runs all the test using Jest.
