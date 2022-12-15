@@ -1,31 +1,40 @@
-import {
-  OAuth2Strategy,
-  OAuth2StrategyVerifyParams,
-} from 'remix-auth-oauth2';
+import { OAuth2Strategy, OAuth2StrategyVerifyParams } from 'remix-auth-oauth2';
 import type { StrategyVerifyCallback } from 'remix-auth';
 
-import type { AdditionalFacebookProfileField, FacebookProfile, FacebookScope, FacebookExtraParams, FacebookStrategyOptions } from './types';
+import type {
+  AdditionalFacebookProfileField,
+  FacebookProfile,
+  FacebookScope,
+  FacebookExtraParams,
+  FacebookStrategyOptions,
+} from './types';
 export * from './types';
 
 export const baseProfileFields = [
-	'id',
-	'email',
-	'name',
-	'first_name',
-	'middle_name',
-	'last_name',
-	'picture',
+  'id',
+  'email',
+  'name',
+  'first_name',
+  'middle_name',
+  'last_name',
+  'picture',
 ] as const;
 
 export const FacebookName = 'facebook';
-export const FacebookDefaultScopes: FacebookScope[] = ['public_profile', 'email'];
+export const FacebookDefaultScopes: FacebookScope[] = [
+  'public_profile',
+  'email',
+];
 export const FacebookScopeSeperator = ',';
-export type FacebookProfileFields = [...typeof baseProfileFields, ...AdditionalFacebookProfileField[]]
+export type FacebookProfileFields = [
+  ...typeof baseProfileFields,
+  ...AdditionalFacebookProfileField[]
+];
 
 export class FacebookStrategy<User> extends OAuth2Strategy<
-	User,
-	FacebookProfile,
-	FacebookExtraParams
+  User,
+  FacebookProfile,
+  FacebookExtraParams
 > {
   public name = FacebookName;
   private readonly scope: FacebookScope[];
@@ -39,7 +48,7 @@ export class FacebookStrategy<User> extends OAuth2Strategy<
       clientSecret,
       callbackURL,
       scope,
-			extraProfileFields,
+      extraProfileFields,
     }: FacebookStrategyOptions,
     verify: StrategyVerifyCallback<
       User,
@@ -58,18 +67,18 @@ export class FacebookStrategy<User> extends OAuth2Strategy<
     );
     this.scope = scope || FacebookDefaultScopes;
     //Ensure unique entries in case they include the base fields
-		this.profileFields = Array.from(
-			new Set([...baseProfileFields, ...(extraProfileFields || [])]),
-		) as FacebookProfileFields;
+    this.profileFields = Array.from(
+      new Set([...baseProfileFields, ...(extraProfileFields || [])])
+    ) as FacebookProfileFields;
   }
 
   protected authorizationParams(): URLSearchParams {
-		const params = new URLSearchParams({
-			scope: this.scope.join(FacebookScopeSeperator),
-		});
+    const params = new URLSearchParams({
+      scope: this.scope.join(FacebookScopeSeperator),
+    });
 
-		return params;
-	}
+    return params;
+  }
 
   protected async userProfile(accessToken: string): Promise<FacebookProfile> {
     const requestParams = `?fields=${this.profileFields.join(',')}`;
