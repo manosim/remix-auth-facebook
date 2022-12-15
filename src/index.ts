@@ -1,74 +1,45 @@
 import {
-  OAuth2Profile,
   OAuth2Strategy,
   OAuth2StrategyVerifyParams,
 } from 'remix-auth-oauth2';
 import type { StrategyVerifyCallback } from 'remix-auth';
 
-import type { FacebookPicture } from './types';
+import type { AdditionalFacebookProfileField, FacebookProfile, FacebookScope, FacebookExtraParams, FacebookStrategyOptions } from './types';
+export * from './types';
 
-/**
- * This interface declares what configuration the strategy needs from the
- * developer to correctly work.
- */
-export interface FacebookStrategyOptions {
-  clientID: string;
-  clientSecret: string;
-  callbackURL: string;
-  scope?: string;
-}
+export const baseProfileFields = [
+	'id',
+	'email',
+	'name',
+	'first_name',
+	'middle_name',
+	'last_name',
+	'picture',
+] as const;
 
-export type FacebookProfile = {
-  id: string;
-  displayName: string;
-  name: {
-    familyName: string;
-    givenName: string;
-  };
-  emails: [{ value: string }];
-  photos: [{ value: string }];
-  _json: {
-    id: string;
-    name: string;
-    first_name: string;
-    last_name: string;
-    picture: FacebookPicture;
-    email: string;
-  };
-} & OAuth2Profile;
-
-/**
- * This interface declares what the developer will receive from the strategy
- * to verify the user identity in their system.
- */
-export type FacebookExtraParams = {
-  // FIXME!
-} & Record<string, string | number>;
+export const FacebookName = 'facebook';
+export const FacebookDefaultScopes: FacebookScope[] = ['public_profile', 'email'];
+export const FacebookScopeSeperator = ',';
+export type FacebookProfileFields = [...typeof baseProfileFields, ...AdditionalFacebookProfileField[]]
 
 export class FacebookStrategy<User> extends OAuth2Strategy<
-  User,
-  FacebookProfile,
-  FacebookExtraParams
+	User,
+	FacebookProfile,
+	FacebookExtraParams
 > {
-  public name = 'facebook';
-  private readonly scope: string;
+  public name = FacebookName;
+  private readonly scope: FacebookScope[];
   private readonly userInfoURL = 'https://graph.facebook.com/me';
 
-  private readonly profileFields = [
-    'id',
-    'email',
-    'name',
-    'first_name',
-    'last_name',
-    'picture',
-  ];
+  private readonly profileFields: FacebookProfileFields;
 
   constructor(
     {
       clientID,
       clientSecret,
       callbackURL,
-      scope = 'public_profile,email',
+      scope,
+			extraProfileFields,
     }: FacebookStrategyOptions,
     verify: StrategyVerifyCallback<
       User,
@@ -85,13 +56,20 @@ export class FacebookStrategy<User> extends OAuth2Strategy<
       },
       verify
     );
-    this.scope = scope;
+    this.scope = scope || FacebookDefaultScopes;
+    //Ensure unique entries in case they include the base fields
+		this.profileFields = Array.from(
+			new Set([...baseProfileFields, ...(extraProfileFields || [])]),
+		) as FacebookProfileFields;
   }
 
   protected authorizationParams(): URLSearchParams {
-    const params = new URLSearchParams({ scope: this.scope });
-    return params;
-  }
+		const params = new URLSearchParams({
+			scope: this.scope.join(FacebookScopeSeperator),
+		});
+
+		return params;
+	}
 
   protected async userProfile(accessToken: string): Promise<FacebookProfile> {
     const requestParams = `?fields=${this.profileFields.join(',')}`;
