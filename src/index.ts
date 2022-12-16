@@ -65,11 +65,22 @@ export class FacebookStrategy<User> extends OAuth2Strategy<
       },
       verify
     );
-    this.scope = scope || FacebookDefaultScopes;
+    this.scope = this.getScope(scope);
     //Ensure unique entries in case they include the base fields
-    this.profileFields = Array.from(
-      new Set([...baseProfileFields, ...(extraProfileFields || [])])
-    ) as FacebookProfileFields;
+    this.profileFields = [
+      ...new Set([...baseProfileFields, ...(extraProfileFields || [])]),
+    ] as FacebookProfileFields;
+  }
+
+  //Allow users the option to pass a scope string, or typed array
+  protected getScope(scope: FacebookStrategyOptions['scope']) {
+    if (!scope) {
+      return FacebookDefaultScopes;
+    } else if (typeof scope === 'string') {
+      return scope.split(FacebookScopeSeperator) as FacebookScope[];
+    }
+
+    return scope;
   }
 
   protected authorizationParams(): URLSearchParams {

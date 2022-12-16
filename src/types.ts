@@ -101,7 +101,7 @@ export type FacebookStrategyOptions = {
    * See all the possible scopes:
    * @see https://developers.facebook.com/docs/permissions/reference
    */
-  scope?: FacebookScope[];
+  scope?: FacebookScope[] | string;
   /**
    * Additional fields that will show up in the profile._json object
    *
