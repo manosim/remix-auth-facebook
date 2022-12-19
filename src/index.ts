@@ -20,12 +20,12 @@ export const baseProfileFields = [
   'picture',
 ] as const;
 
-export const FacebookName = 'facebook';
-export const FacebookDefaultScopes: FacebookScope[] = [
+export const FacebookStrategyName = 'facebook';
+export const FacebookStrategyDefaultScopes: FacebookScope[] = [
   'public_profile',
   'email',
 ];
-export const FacebookScopeSeperator = ',';
+export const FacebookStrategyScopeSeperator = ',';
 export type FacebookProfileFields = [
   ...typeof baseProfileFields,
   ...AdditionalFacebookProfileField[]
@@ -36,7 +36,7 @@ export class FacebookStrategy<User> extends OAuth2Strategy<
   FacebookProfile,
   FacebookExtraParams
 > {
-  public name = FacebookName;
+  public name = FacebookStrategyName;
   private readonly scope: FacebookScope[];
   private readonly userInfoURL = 'https://graph.facebook.com/me';
 
@@ -73,11 +73,11 @@ export class FacebookStrategy<User> extends OAuth2Strategy<
   }
 
   //Allow users the option to pass a scope string, or typed array
-  protected getScope(scope: FacebookStrategyOptions['scope']) {
+  private getScope(scope: FacebookStrategyOptions['scope']) {
     if (!scope) {
-      return FacebookDefaultScopes;
+      return FacebookStrategyDefaultScopes;
     } else if (typeof scope === 'string') {
-      return scope.split(FacebookScopeSeperator) as FacebookScope[];
+      return scope.split(FacebookStrategyScopeSeperator) as FacebookScope[];
     }
 
     return scope;
@@ -85,7 +85,7 @@ export class FacebookStrategy<User> extends OAuth2Strategy<
 
   protected authorizationParams(): URLSearchParams {
     const params = new URLSearchParams({
-      scope: this.scope.join(FacebookScopeSeperator),
+      scope: this.scope.join(FacebookStrategyScopeSeperator),
     });
 
     return params;

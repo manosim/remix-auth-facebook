@@ -133,7 +133,7 @@ export type FacebookProfile = {
 } & OAuth2Profile;
 
 export type FacebookExtraParams = {
-  expires_in: 5183998;
+  expires_in: number;
   token_type: 'bearer';
 } & Record<string, string | number>;
 
