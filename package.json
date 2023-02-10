@@ -1,6 +1,6 @@
 {
   "name": "remix-auth-facebook",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "scripts": {
@@ -35,7 +35,7 @@
     "remix-auth": "^3.2.2"
   },
   "dependencies": {
-    "remix-auth-oauth2": "^1.2.2"
+    "remix-auth-oauth2": "^1.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.2",
