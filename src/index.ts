@@ -66,13 +66,13 @@ export class FacebookStrategy<User> extends OAuth2Strategy<
       verify
     );
     this.scope = this.getScope(scope);
-    //Ensure unique entries in case they include the base fields
+    // Ensure unique entries in case they include the base fields
     this.profileFields = [
       ...new Set([...baseProfileFields, ...(extraProfileFields || [])]),
     ] as FacebookProfileFields;
   }
 
-  //Allow users the option to pass a scope string, or typed array
+  // Allow users the option to pass a scope string, or typed array
   private getScope(scope: FacebookStrategyOptions['scope']) {
     if (!scope) {
       return FacebookStrategyDefaultScopes;
