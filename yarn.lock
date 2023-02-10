@@ -4680,14 +4680,6 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-dom@^18.1.0:
-  version "18.1.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.1.0.tgz#7f6dd84b706408adde05e1df575b3a024d7e8a2f"
-  integrity sha512-fU1Txz7Budmvamp7bshe4Zi32d0ll7ect+ccxNu9FlObT605GOEB8BfO4tmRJ39R5Zj831VCpvQ05QPBW5yb+w==
-  dependencies:
-    loose-envify "^1.1.0"
-    scheduler "^0.22.0"
-
 react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
@@ -4810,20 +4802,26 @@ regjsparser@^0.8.2:
   dependencies:
     jsesc "~0.5.0"
 
-remix-auth-oauth2@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/remix-auth-oauth2/-/remix-auth-oauth2-1.2.2.tgz#bebe0ac586744ed94885bd47f6bcb710d377fede"
-  integrity sha512-bbQw/SFAbilSE1zrZFaJN/NM7WUkC63CKJFVz2e/Y21qqMZo5eVQXooSV6d23mABfodeVk6wthngdLAjxak6fQ==
+remix-auth-oauth2@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/remix-auth-oauth2/-/remix-auth-oauth2-1.6.0.tgz#347db1c9bfac934ca6e90288c917cbba711021bd"
+  integrity sha512-HnMgdKn/+LIKHYlbxys14g9cUMGvzMS9mbopAfnntIYWBC8MOfUy6uYyyoWJNqm3HriAE/MiEUaTnlz3B0c7uQ==
   dependencies:
     debug "^4.3.4"
-    react-dom "^18.1.0"
-    remix-auth "^3.2.2"
+    remix-auth "^3.4.0"
     uuid "^8.3.2"
 
-remix-auth@^3.2.1, remix-auth@^3.2.2:
+remix-auth@^3.2.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/remix-auth/-/remix-auth-3.2.2.tgz#8941a6b57cd523872b7aacf200976d77c055a9f7"
   integrity sha512-VtzkfxeXbnXilupRTZkP40aik4vFSdwwRT96mbq0UBDMqHVRfQ7h9Y51HFrTufHJZEfAdkCopedMVvm0vQYKag==
+  dependencies:
+    uuid "^8.3.2"
+
+remix-auth@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/remix-auth/-/remix-auth-3.4.0.tgz#a3cd4455477f6c60f6cf1bad0ae119101a6d8ff8"
+  integrity sha512-VRliJo9VRAS4sSYgMjYbi7rYRixPWU2Tb8PFZb06OIj0nONK/1KRzHf2+Y6VGZeIacepLVgan6g2IUJjayE2rQ==
   dependencies:
     uuid "^8.3.2"
 
@@ -4977,13 +4975,6 @@ saxes@^5.0.1:
   integrity sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==
   dependencies:
     xmlchars "^2.2.0"
-
-scheduler@^0.22.0:
-  version "0.22.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.22.0.tgz#83a5d63594edf074add9a7198b1bae76c3db01b8"
-  integrity sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==
-  dependencies:
-    loose-envify "^1.1.0"
 
 "semver@2 || 3 || 4 || 5", semver@^5.5.0:
   version "5.7.1"
