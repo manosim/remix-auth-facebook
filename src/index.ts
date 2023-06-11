@@ -1,11 +1,11 @@
-import { OAuth2Strategy, OAuth2StrategyVerifyParams } from 'remix-auth-oauth2';
 import type { StrategyVerifyCallback } from 'remix-auth';
+import { OAuth2Strategy, OAuth2StrategyVerifyParams } from 'remix-auth-oauth2';
 
 import type {
   AdditionalFacebookProfileField,
+  FacebookExtraParams,
   FacebookProfile,
   FacebookScope,
-  FacebookExtraParams,
   FacebookStrategyOptions,
 } from './types';
 export * from './types';
@@ -17,7 +17,6 @@ export const baseProfileFields = [
   'first_name',
   'middle_name',
   'last_name',
-  'picture',
 ] as const;
 
 export const FacebookStrategyName = 'facebook';
@@ -70,6 +69,10 @@ export class FacebookStrategy<User> extends OAuth2Strategy<
     this.profileFields = [
       ...new Set([...baseProfileFields, ...(extraProfileFields || [])]),
     ] as FacebookProfileFields;
+
+    if (!this.profileFields.some((field) => field.startsWith('picture'))) {
+      this.profileFields.push('picture');
+    }
   }
 
   // Allow users the option to pass a scope string, or typed array
